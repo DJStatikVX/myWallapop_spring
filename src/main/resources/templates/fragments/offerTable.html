@@ -1,0 +1,42 @@
+			<table class="table table-hover" id="tableOffers">
+				<thead>
+					<tr>
+						<th th:text="#{offer.title}">Título</th>
+						<th th:text="#{offer.details}">Detalles</th>
+						<th th:text="#{offer.price}">Precio</th>
+						<th></th>
+						<th th:text="#{offer.state}">Estado</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody name="tableRows">
+					<tr th:each="offer : ${offersList}">
+						<td class="text-left" th:text="${offer.title}">HDD Toshiba P300</td>
+						<td class="text-left" th:text="${offer.details}">Vendo disco duro en perfecto
+							estado</td>
+						<td class="text-left" th:text="${offer.price + '€'}">73.00€</td>
+						<td class="text-left"> <a th:href="${'/offer/details/' + offer.id}" th:text = "#{offer.details}"> detalles</td>
+						<td class="text-left">
+							<div th:if="${session.activeUser.email} == ${offer.owner.email}">
+								<span class="text-danger" th:text="#{offer.list.seller}">Propio</span>
+							</div>
+							<div th:unless="${session.activeUser.email} == ${offer.owner.email}">
+								<div th:if="${offer.sold}">
+									<span class="text-danger" th:text="#{offer.list.sold}">Vendido</span>
+								</div>
+								<div th:unless="${offer.sold}">
+									<a th:href="${'/offer/buy/' + offer.id}"
+										th:text="#{offer.list.buy}" class="btn btn-success">Comprar</a>
+								</div>
+							</div>
+						</td>
+						<td class="text-left">
+							<div th:if="${session.activeUser.email} != ${offer.owner.email} and ${not offer.sold}">
+								<a th:href="${'/conversation/new/' + offer.id}"
+									th:text="#{offer.list.sendMsg}" class="btn btn-info">Enviar Mensaje</a>
+							</div>
+						</td>						
+					</tr>
+
+				</tbody>
+			</table>

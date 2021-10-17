@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head"/>
+<body>
+
+<!-- Barra de Navegación superior -->
+<nav th:replace="fragments/nav"/>
+
+<div class="container">
+  <h2 th:text="#{offer.sale.title}">Mis ofertas</h2>
+  <p th:text="#{offer.sale.description}">Estas son las ofertas que has publicado:</p> 
+  <span th:if = "${error}" class = "text-danger" th:text= #{Error.promoted}> errores</span>                                                                               
+  <div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th th:text="#{offer.title}">Título</th>
+		<th th:text="#{offer.details}">Detalles</th>
+		<th th:text="#{offer.price}">Precio</th>
+		<th></th>
+
+        <th></th>
+      </tr>
+    </thead>
+	<tbody>
+	  <tr th:each="offer : ${offersList}">
+	    <td th:text="${offer.title}"> HDD Toshiba P300</td>
+	    <td th:text="${offer.details}">Vendo disco duro en perfecto estado</td>
+	    <td th:text="${offer.price + '€'}">73.00€</td>
+	    <td> <a th:text="#{offer.details}"
+	    	th:href="${'/offer/details/' + offer.id}"> detalles</td>
+	    <td>
+	    	<a class="btn btn-danger" sec:authorize="hasRole('ROLE_USER')" 
+	    		th:href="${'/offer/delete/' + offer.id}" 
+	    		th:text="#{offer.sale.delete}">Eliminar</a>
+	    </td>
+	    <td>
+	    <span th:if = "${offer.sold}"  class="text-success" th:text = "#{offer.list.sold}"></span>
+	    <div th:unless ="${offer.sold}" > 
+	    	<a th:unless = "${offer.promoted}" class="btn btn-success" 
+	    		sec:authorize="hasRole('ROLE_USER')" 
+	    		th:href="${'/offer/promote/' + offer.id}" 
+
+	    		th:text="#{offer.sale.promote}"
+	    		th:id = "${'promote' + offer.id}">Promocionar</a>
+	    	<span th:if = "${offer.promoted}" class="text-success" sec:authorize="hasRole('ROLE_USER')" 
+	    		th:href="${'/offer/promote/' + offer.id}" 
+	    		th:text="#{offer.sale.alreadyPromoted}">Ya promocionada</span>
+	    		</div>
+	    </td>
+	  </tr>
+	</tbody>
+  </table>       
+  </div>
+</div>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

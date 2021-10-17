@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<nav th:replace="fragments/nav" />
+
+
+
+	<div class="container">
+		<h2 th:text="#{offer.details.title}">Detalles de la oferta</h2>
+		
+		<div class="panel panel-default">
+			<div th:text="#{offer.title}" class="panel-heading">titulo</div>
+			<div class="panel-body" th:text="${offer.title}">28276</div>
+		</div>
+		<div class="panel panel-default">
+			<div th:text="#{offer.emailSeller}" class="panel-heading">mail</div>
+			<div class="panel-body" th:text="${offer.owner.email}">28276</div>
+		</div>
+		<div class="panel panel-default">
+			<div th:text="#{offer.details}" class="panel-heading">Desc</div>
+			<div class="panel-body" th:text="${offer.details}">
+				Ejercicio 1</div>
+		</div>
+		<div class="panel panel-default">
+			<div th:text="#{offer.price}" class="panel-heading">prec</div>
+			<div class="panel-body" th:text="${offer.price}">
+				Ejercicio 1</div>
+		</div>
+		<div class="panel panel-default">
+			<div th:text="#{offer.date}" class="panel-heading">fecha</div>
+			<div class="panel-body" th:text="${offer.registerDate}">
+				Ejercicio 1</div>
+		</div>
+		<div th:if="${offer.sold}" class="panel panel-default">
+			<div th:text="#{offer.emailbuyer}" class="panel-heading">comprad</div>
+			<div class="panel-body" th:text="${offer.buyer.email}">100</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

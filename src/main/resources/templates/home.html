@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<nav th:replace="fragments/nav" />
+	<div class="container" style="text-align: center">
+		<h2 th:text="#{welcome.message}"></h2>
+		<h3 th:text="#{home.private}">Esta es una zona privada la web</h3>
+		<p th:text="#{home.authentic}">Usuario Autenticado como :</p>
+		<span sec:authentication="principal.username" th:inline="text">
+		</span>
+		<h3 sec:authorize="hasRole('ROLE_USER')"
+			th:text="#{home.promoted}">Ofertas Promocionadas</h3>
+
+		<div sec:authorize="hasRole('ROLE_USER')" class="table-responsive">
+			<table class="table table-hover" id="tableOffers"
+				th:replace="fragments/offerTable">
+			</table>
+		</div>
+	</div>
+
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

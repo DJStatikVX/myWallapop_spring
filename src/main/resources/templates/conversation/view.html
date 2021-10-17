@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2 th:if="${session.activeUser.email != conversation.offer.owner.email}" 
+			th:text="#{conversation.details.title} + ' ' + ${conversation.offer.owner.email} 
+			+ ' (' + ${conversation.offer.title} + ')'"></h2>
+		<h2 th:unless="${session.activeUser.email != conversation.offer.owner.email}" 
+			th:text="#{conversation.details.title} + ' ' + ${conversation.buyer.email} 
+			+ ' (' + ${conversation.offer.title} + ')'"></h2>
+		<div class="messages" id="messages">
+			<div th:each="message : ${messages}">
+				<div class="panel panel-default">
+					<div th:text="${message.userEmail + ' (' + message.date + ')'}" 
+						class="panel-heading">taso@email (21/03/2021 00:44)</div>
+					<div class="panel-body" th:text="${message.text}">¡Hola!</div>
+				</div>
+			</div>
+		</div>
+		<form action="/conversation/send" method="post" class="send">
+			<div class="form-inline">
+				<input type="text" class="form-control form-control-lg" 
+					id="sendMessage" name="message" 
+					th:placeholder="#{conversation.message.placeholder}"
+					required="true">
+				<button type="submit" th:text="#{conversation.message.send}" 
+					class="btn btn-success">Enviar</button>
+			</div>
+		</form>
+	</div>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			var element = document.getElementById("messages");
+			element.scrollTop = element.scrollHeight;
+			$("html, body").scrollTop($(document).height());
+		/*]]>*/
+	</script>
+
+</body>
+</html>
